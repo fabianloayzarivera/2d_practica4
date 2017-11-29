@@ -1,6 +1,6 @@
 #include <Vec2.h>
 
-Vec2::Vec2(float xNew = 0, float yNew = 0) {
+Vec2::Vec2(float xNew, float yNew) {
 	x = xNew;
 	y = yNew;
 }

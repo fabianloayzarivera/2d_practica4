@@ -9,23 +9,23 @@ class Sprite {
 private:
 	const ltex_t* texture;
 	lblend_t blend;
-	float r;
-	float g;
-	float b;
-	float a;
+	float red;
+	float green;
+	float blue;
+	float alpha;
 	float angle;
-	Vec2& position;
-	Vec2& scale;
-	Vec2& size;
-	Vec2& pivot;
+	Vec2 position;
+	Vec2 scale;
+	Vec2 size;
+	Vec2 pivot;
 	int horizontalFrames;
 	int verticalFrames;
 	int fps;
 	float currentFrame;
-	Sprite(const ltex_t* tex, int hframes = 1, int vframes = 1);
+	
 	
 public :
-	
+	Sprite(const ltex_t* tex, int hframes = 1, int vframes = 1);
 	const ltex_t* getTexture() const;
 	void setTexture(const ltex_t* tex);
 

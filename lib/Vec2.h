@@ -12,7 +12,7 @@ public:
 	float x;
 	float y;
 
-	Vec2(float xNew, float yNew);
+	Vec2(float xNew = 0, float yNew = 0);
 	//Vec2 sum(const Vec2 &other);
 	Vec2 operator +(const Vec2& other);
 	//Vec2 subs(const Vec2 &other);
