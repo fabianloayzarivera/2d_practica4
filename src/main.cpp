@@ -17,6 +17,7 @@
 using namespace std;
 
 ltex_t *createTexture(const char *filename, int *width, int *height);
+
 int main() {
 
 	// Inicializamos GLFW
@@ -39,10 +40,18 @@ int main() {
 
 	int widthBee		= 640;
 	int heightBee		= 92;
-	Sprite *beeSprite	= new Sprite(createTexture("./data/bee_anim.png", &widthBee, &heightBee), 8, 1);
-
-	
+	Sprite beeSprite	= Sprite(createTexture("./data/bee_anim.png", &widthBee, &heightBee), 8, 1);
+	beeSprite.setPosition(Vec2(0, 0));
+	beeSprite.setBlend(BLEND_ALPHA);
+	beeSprite.setFps(8);
+	int beeFrame;
+	float frame = 0;
 	double lastTime = glfwGetTime();
+	double xposMouse = 0;
+	double yposMouse = 0;
+	double xposDelayed = 0;
+	double yposDelayed = 0;
+	Vec2 updatedPos;
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE)) {
 		// Actualizamos delta
 		float deltaTime = static_cast<float>(glfwGetTime() - lastTime);
@@ -52,16 +61,23 @@ int main() {
 		int screenWidth, screenHeight;
 		glfwGetWindowSize(window, &screenWidth, &screenHeight);
 		lgfx_setviewport(0, 0, screenWidth, screenHeight);
-
-		ltex_drawrotsized(beeSprite->getTexture(), 0, 0, 0, 0, 0, screenWidth, screenHeight, 0, 0, 1, 1);
-
-
-
-
-
-
-
 		lgfx_clearcolorbuffer(0, 0, 0);
+
+		//ltex_drawrotsized(beeSprite->getTexture(), 0, 0, 0, 0, 0, widthBee, heightBee, 0, 0, 1, 1);		
+		//ltex_draw(beeSprite->getTexture(), 0, 0);
+
+		glfwGetCursorPos(window, &xposMouse, &yposMouse);
+		Vec2 mousePos = Vec2(xposMouse, yposMouse);
+		/*xposDelayed += xposMouse * 128 * deltaTime;
+		yposDelayed += yposMouse * 128 * deltaTime;*/
+		/*xposDelayed += beeSprite.getPosition().x;
+		yposDelayed += beeSprite.getPosition().y;*/
+		updatedPos = Vec2(xposDelayed, yposDelayed);
+		beeSprite.setPosition(mousePos);
+		
+		beeSprite.update(deltaTime);
+		beeSprite.draw();
+		
 		
 		// Actualizamos ventana y eventos
 		glfwSwapBuffers(window);
@@ -93,3 +109,4 @@ ltex_t* createTexture(const char *filename, int *width, int *height) {
 	//ltex_free(ltex_t* tex);
 
 }
+

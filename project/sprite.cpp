@@ -8,7 +8,7 @@ Sprite::Sprite(const ltex_t* tex, int hframes, int vframes) {
 	scale = Vec2(1, 1);
 	size = Vec2(0, 0);
 	pivot = Vec2(0.5f, 0.5f);
-
+	currentFrame = 0;
 
 }
 
@@ -37,7 +37,7 @@ void Sprite::setScale(const Vec2& s) { scale = s; }
 
 // Tamaño de un frame multiplicado por la escala
 Vec2 Sprite::getSize() const { return size; }
-
+void Sprite::setSize(const Vec2& s) { size = s; };
 
 // Este valor se pasa a ltex_drawrotsized en el pintado
 // para indicar el pivote de rotación
@@ -56,4 +56,20 @@ void Sprite::setFps(int f) { fps = f; }
 
 // Frame actual de animación
 float Sprite::getCurrentFrame() const { return currentFrame; }
-void Sprite::setCurrentFrame(int frame) { currentFrame = frame; }
+void Sprite::setCurrentFrame(int frame) { currentFrame = frame;}
+
+void Sprite::update(float deltaTime) {
+	float frame = getCurrentFrame() + fps * deltaTime;
+	currentFrame = frame;
+	
+}
+
+void Sprite::draw() const {
+
+	float frameWidth = texture->width / horizontalFrames;
+	float widthRatio = 1.0f / horizontalFrames;
+	float u0 = widthRatio * static_cast<int>(currentFrame);
+	float u1 = u0 + widthRatio;
+	lgfx_setblend(blend);
+	ltex_drawrotsized(texture, position.x, position.y, 0, 0.5f, 0.5f, frameWidth, texture->height, u0, 0, u1, 1);
+}

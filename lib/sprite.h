@@ -4,7 +4,7 @@
 #include <Vec2.h>
 #include <conio.h>
 #include <vector>
-
+#include <math.h>
 class Sprite {
 private:
 	const ltex_t* texture;
@@ -51,7 +51,7 @@ public :
 
 	// Tamaño de un frame multiplicado por la escala
 	Vec2 getSize() const;
-
+	void setSize(const Vec2& s); //added by me
 
 	// Este valor se pasa a ltex_drawrotsized en el pintado
 	// para indicar el pivote de rotación
