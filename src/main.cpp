@@ -49,9 +49,13 @@ int main() {
 	double lastTime = glfwGetTime();
 	double xposMouse = 0;
 	double yposMouse = 0;
-	double xposDelayed = 0;
-	double yposDelayed = 0;
-	Vec2 updatedPos;
+	double xposBee = 0;
+	double yposBee = 0;
+	float pointsX = 0;
+	float pointsY = 0;
+	Vec2 dist;
+	Vec2 beePos;
+	Vec2 direction;
 	while (!glfwWindowShouldClose(window) && !glfwGetKey(window, GLFW_KEY_ESCAPE)) {
 		// Actualizamos delta
 		float deltaTime = static_cast<float>(glfwGetTime() - lastTime);
@@ -68,12 +72,27 @@ int main() {
 
 		glfwGetCursorPos(window, &xposMouse, &yposMouse);
 		Vec2 mousePos = Vec2(xposMouse, yposMouse);
+		
 		/*xposDelayed += xposMouse * 128 * deltaTime;
 		yposDelayed += yposMouse * 128 * deltaTime;*/
-		/*xposDelayed += beeSprite.getPosition().x;
-		yposDelayed += beeSprite.getPosition().y;*/
-		updatedPos = Vec2(xposDelayed, yposDelayed);
-		beeSprite.setPosition(mousePos);
+		
+		dist = mousePos - beePos;	
+		direction = dist.norm();
+		
+		if (dist.lenght() > 2) {
+			 pointsX = 128.0f * deltaTime * direction.x;
+			 pointsY = 128.0f * deltaTime * direction.y;
+		}
+		else {
+			pointsX = 0;
+			pointsY = 0;
+		}
+		xposBee += pointsX;	
+		yposBee += pointsY;
+		
+		beePos = Vec2(xposBee, yposBee);
+
+		beeSprite.setPosition(beePos);
 		
 		beeSprite.update(deltaTime);
 		beeSprite.draw();
