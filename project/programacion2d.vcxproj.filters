@@ -24,7 +24,7 @@
     <ClCompile Include="..\src\font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sprite.cpp">
+    <ClCompile Include="..\src\sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -44,6 +44,7 @@ int main() {
 	beeSprite.setPosition(Vec2(0, 0));
 	beeSprite.setBlend(BLEND_ALPHA);
 	beeSprite.setFps(8);
+	beeSprite.setPivot(Vec2(0.5f, 0.5f));
 	int beeFrame;
 	float frame = 0;
 	double lastTime = glfwGetTime();
@@ -53,6 +54,7 @@ int main() {
 	double yposBee = 0;
 	float pointsX = 0;
 	float pointsY = 0;
+	float angle=0;
 	Vec2 dist;
 	Vec2 beePos;
 	Vec2 direction;
@@ -67,32 +69,39 @@ int main() {
 		lgfx_setviewport(0, 0, screenWidth, screenHeight);
 		lgfx_clearcolorbuffer(0, 0, 0);
 
-		//ltex_drawrotsized(beeSprite->getTexture(), 0, 0, 0, 0, 0, widthBee, heightBee, 0, 0, 1, 1);		
-		//ltex_draw(beeSprite->getTexture(), 0, 0);
-
 		glfwGetCursorPos(window, &xposMouse, &yposMouse);
-		Vec2 mousePos = Vec2(xposMouse, yposMouse);
-		
-		/*xposDelayed += xposMouse * 128 * deltaTime;
-		yposDelayed += yposMouse * 128 * deltaTime;*/
-		
+		Vec2 mousePos = Vec2(xposMouse, yposMouse);		
 		dist = mousePos - beePos;	
 		direction = dist.norm();
 		
 		if (dist.lenght() > 2) {
 			 pointsX = 128.0f * deltaTime * direction.x;
 			 pointsY = 128.0f * deltaTime * direction.y;
+			 if (xposBee < mousePos.x && angle > -15) {
+				 angle -= (32 * deltaTime);
+			 }
+			 else if(angle < 15){
+				 angle += (32 * deltaTime);
+			 }
 		}
 		else {
 			pointsX = 0;
 			pointsY = 0;
+			if (angle < 0) {
+				angle += (32 * deltaTime);
+			}
+			else if(angle > 0){
+				angle -= (32 * deltaTime);
+			}
 		}
 		xposBee += pointsX;	
-		yposBee += pointsY;
-		
-		beePos = Vec2(xposBee, yposBee);
+		yposBee += pointsY;		
 
+		beePos = Vec2(xposBee, yposBee);
 		beeSprite.setPosition(beePos);
+		
+		
+		beeSprite.setAngle(angle);
 		
 		beeSprite.update(deltaTime);
 		beeSprite.draw();

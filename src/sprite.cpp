@@ -71,5 +71,5 @@ void Sprite::draw() const {
 	float u0 = widthRatio * static_cast<int>(currentFrame);
 	float u1 = u0 + widthRatio;
 	lgfx_setblend(blend);
-	ltex_drawrotsized(texture, position.x, position.y, 0, 0.5f, 0.5f, frameWidth, texture->height, u0, 0, u1, 1);
+	ltex_drawrotsized(texture, position.x, position.y, angle, 0.5f, 0.5f, frameWidth, texture->height, u0, 0, u1, 1);
 }
